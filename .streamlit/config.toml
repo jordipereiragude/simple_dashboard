@@ -1,0 +1,17 @@
+[theme]
+primaryColor = "#fe0000"
+backgroundColor = "#f7f7f7"
+secondaryBackgroundColor = "#eeeeee"
+textColor = "#252525"
+font = "sans serif"
+baseFontSize = 17
+
+[server]
+headless = true
+enableStaticServing = true
+
+[browser]
+gatherUsageStats = false
+
+[client]
+toolbarMode = "minimal"
