@@ -127,8 +127,6 @@ with st.container(border=True):
     traffic = charts.traffic_lights(filtered, workers, selected_workers)
     # A single Plotly row, with a minimum width and horizontal scroll on small screens.
     # Scatter's marker sizes are measured in pixels, so circles never become ellipses.
-    base_path = st.get_option("server.baseUrlPath").strip("/")
-    asset_root = f"/{base_path}/app/static/" if base_path else "/app/static/"
     # Streamlit serves custom .js static assets as text/plain + nosniff; embed Plotly
     # in this iframe so the traffic strip also works without a CDN or MIME overrides.
     traffic_html = pio.to_html(traffic, include_plotlyjs=True, full_html=False,
@@ -138,8 +136,10 @@ with st.container(border=True):
                     '<div role="region" aria-label="Salesperson traffic lights, scroll horizontally on small screens" '
                     'tabindex="0" class="strip">' + traffic_html + '</div>', height=240, scrolling=True)
 
+# Resolve map assets relative to the app document so Cloud's /~/+/ proxy prefix
+# (which isn't reflected in server.baseUrlPath) is preserved.
 plot_config = {"displaylogo": False, "responsive": True, "scrollZoom": False,
-               "topojsonURL": asset_root, "toImageButtonOptions": {"scale": 2},
+               "topojsonURL": "app/static/", "toImageButtonOptions": {"scale": 2},
                "modeBarButtonsToRemove": ["select2d", "lasso2d"]}
 
 
